@@ -212,7 +212,8 @@ function loadPerfil(){
         $("#profileContainer").append("<div class='row'><div class='col s12'><div class='card horizontal'><div class='card-image'><img src='img/"+Perfiles[i].profilepic+"' id='profile-pic'></div><div class='card-stacked'><div class='card-content'><h4>"+Perfiles[i].nombre+" "+Perfiles[i].apellidos+"</h4></div></div></div></div><div class='col s12'><table class='striped'><tr><td>Correo:</td><td>"+Perfiles[i].correo+"</td><td><button class='waves-effect waves-light btn-small green modal-trigger' onclick='modalEditar(id);'>Editar<i class='material-icons right'>edit</i></button></td></tr><tr><td>Telefono:</td><td>"+Perfiles[i].telefono+"</td><td></td></tr><tr><td>Direccion:</td><td>"+Perfiles[i].direccion+"</td><td></td></tr></table></div></div>");
         $("#puntosContainer").append("<li><a class='flow-text black-text' href='#!'>"+Perfiles[i].puntosObtenidos+"</a></li>");
         localStorage.setItem("puntosUser",Perfiles[i].puntosObtenidos);
-        $('#editarContainer').append("<div class='row'><h4>Editar datos usuario</h4><table class='striped'><tr><td><input value='"+Perfiles[i].correo+"' id='email' type='text'></td></tr><tr><td><input value='"+Perfiles[i].telefono+"' id='telefono' type='text'></td></tr><tr><td><input value='"+Perfiles[i].direccion+"' id='direccion' type='text'></td></tr><tr><td><input type='file' id='imagendeperfil' name=''></td><td></td></tr></table></div>");
+        $("#bienvenidoContainer").append("<a class='black-text' href='#!'><i class='material-icons black-text'>person</i>Bienvenido "+Perfiles[i].nombre+"</a>");
+        $("#editarContainer").append("<div class='row'><h4>Editar datos usuario</h4><table class='striped'><tr><td><input value='"+Perfiles[i].correo+"' id='email' type='text'></td></tr><tr><td><input value='"+Perfiles[i].telefono+"' id='telefono' type='text'></td></tr><tr><td><input value='"+Perfiles[i].direccion+"' id='direccion' type='text'></td></tr><tr><td><input type='file' id='imagendeperfil' name=''></td><td></td></tr></table></div>");
       }
     },
     error:function(err){
@@ -240,8 +241,10 @@ function editar(){
     success:function(resp){
       console.log(resp);
       if (resp=="true") {
-        console.log(resp);
         M.toast({html: 'Datos actualizados', classes: 'rounded'});
+        setTimeout(function(){
+        location.reload();
+        },2000);
       }
       else {
         M.toast({html: 'Ocurrio un error', classes: 'rounded'});
@@ -250,7 +253,7 @@ function editar(){
     error:function(err){
       console.log(err);
     }
-  })
+  });
 }
 
 //Esta funcion hace el registro de los usuarios nuevos
@@ -321,6 +324,7 @@ function register(){
 function deleteDish(){
   console.log("Ya borre el platillo");
 }
+
 function loadPedidos(){
 
 }
@@ -328,13 +332,70 @@ function updateCalif() {
 
 }
 
+//Esta funcion manda una solicitud para buscar otro usuario y poder mandarle puntos
+function search(){
+  $("#busquedaContainer").empty();
+  $.ajax({
+    url:'http://192.168.0.160/api-rest/controller/CompartirController.php',
+    type:'POST',
+    data:{
+      accion:'Buscar',
+      busqueda:$('#busqueda').val()
+    },
+    success:function(resp){
+      console.log(resp);
+      if (resp != null) {
+        var Resultados = JSON.parse(resp);
+        for(var i in Resultados){
+          $("#busquedaContainer").append("<div class='col l12 s12 m8 '><ul class='collection'><li class='collection-item avatar' onclick='modalEnviar("+Resultados[i].idCliente+");'><img src='img/"+Resultados[i].profilepic+"' alt='' class='circle'><span class='title'><b>"+Resultados[i].nombre+"</b></span><a href='#modal1' class='secondary-content modal-trigger'></a></li></ul></div>");
+        }
+      }
+      else {
+        $("#busquedaContainer").append("<h3>No se encontraron coincidencias</h3>");
+      }
+    },
+    error:function(err){
+      console.log(err);
+    }
+  });
+}
+
+//Esta funcion abre un modal para elegir la cantidad de puntos que se van a enviar
+function modalEnviar(idCliente){
+  $("#compartirContainer").empty();
+  $('#modalEnviar').modal('open');
+  $.ajax({
+    url:'http://192.168.0.160/api-rest/controller/PromocionesController.php',
+    type:'POST',
+    data:{accion:'cargarDescripcionPromociones'},
+    success:function(resp){
+      console.log(resp);
+      var Descripciones = JSON.parse(resp);
+      for(var i in Descripciones){
+        if(Descripciones[i].idPromocion == id){
+          $("#compartirContainer").append("<div class='container'><table class='striped'><tr><td><h3>"+Descripciones[i].promocion+"</h3></td></tr><tr><td><p>"+Descripciones[i].descripcion+"</p></td></tr><tr><td><img style='border-radius: 20px' src='"+Descripciones[i].imagen+"' width='100%' alt=''></td></tr><tr><td><p>Prepared By "+Descripciones[i].restaurant+"</p></td></tr><tr><td><p id='points'>-"+Descripciones[i].costo+"</p></td></tr></table></div>")
+        }
+      }
+    },
+    error:function(err){
+      console.log(err);
+    }
+  });
+}
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //Seccion de carga de datos de pantalla AR
 
 //Esta funcion asigna el ID del restaurante seleccionado y lo almacena en localStorage para poder cargar su menu correspondiente
 function assignRestaurant(idRestaurante) {
   localStorage.setItem("restaurante",idRestaurante);
-  app.loadARchitectWorld();
+  try {
+    app.loadARchitectWorld();
+  } catch (e) {
+    alert(e.stack);
+  }
+  //app.loadARchitectWorld();
 }
 //Esta funcion carga los datos en la pantalla de AR, los platillos su precio, etc...
 function loadAr(){
@@ -476,7 +537,7 @@ function hideDesc() {
 function worldClose(){
   //alert("Eu entrinha");
   try {
-    app.closeWorld();
+    wikitudePlugin.close();
   } catch (e) {
     alert(e.stack);
   }

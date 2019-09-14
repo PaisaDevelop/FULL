@@ -38,61 +38,25 @@
         </div>
       </nav>
     </div>
-<!--COÑOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
-<!--
-*s = small
-*m= medium
-*l= large
--->
 
-    <!-- Modal Structure -->
-    <div id="modalPromocion" class="modal modal-fixed-footer">
-      <div id="promoContainer" class="modal-content">
-      </div>
-      <div class="modal-footer">
-        <div class="pill-modal" align="center">
-          <a href="#!" class="modal-close waves-effect waves-green white-text">Make Order</a>
+
+  <div class="container">
+    <h3>Compartir puntos</h3>
+
+  <div class="row">
+      <div class="row">
+        <div class="input-field col l10 m10 s8">
+          <i class="material-icons prefix">search</i>
+          <input id="busqueda" type="text" class="validate">
+          <label>Buscar</label>
         </div>
+        <button class="waves-effect waves-light btn-small" onclick="search();">Buscar</button>
       </div>
-    </div>
-
-
-
-
-    <!--En esta seccion se crean los restaurantes-->
-    <div class="container hidden">
-    </div>
-      <div class="row" id="restaurantContainer">
-
-      </div>
-
-    <!--En esta seccion se crean los top 10 mejor valorados de entre todos los restaurantes-->
-    <div class="container hidden">
-    </div>
-      <div class="row" id="topContainer"></div>
-
-    <!--En esta seccion se crean las promociones de los restaurantes-->
-
-    <div class="container hidden">
-      <h3>Promociones disponibles</h3>
   </div>
-  <div class="row" id="promosContainer"></div>
+  </div>
 
+<div class="container" id="busquedaContainer"></div>
 
-    <!--En esta seccion se crean las categorias-->
-    <div class="hidden fullscreenbanner" id="fullscreenbanner"></div>
-    <div class="row hidden" id="categoriasContainer"></div>
-    <div class="row hidden" id="resultContainer"></div>
-
-    <div class="fixed-action-btn hidden" id="backbutton">
-      <a class="btn-floating btn-large red" onclick="backCategory();">
-        <i class="large material-icons">arrow_back</i>
-      </a>
-    </div>
-
-
-      <div class="pill-footer" id="pillFooter">
-      </div>
 
 
     <!--AmaMeMie-->
@@ -103,17 +67,14 @@
     <script type="text/javascript">
       $(document).ready(function(){
         validaLogin();
-        $('.dropdown-trigger').dropdown();
-        $('.sidenav').sidenav();
         $('.modal').modal();
-        loadRestaurantes();
+        $(".dropdown-trigger").dropdown();
+        $('.sidenav').sidenav();
         loadPerfil();
       });
     </script>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
+    <!--Script to login with facebook-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v3.3&appId=865335083830327&autoLogAppEvents=1"></script>
   </body>
 </html>

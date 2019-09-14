@@ -49,16 +49,6 @@ var app = {
         },
         [ '2d_tracking' ]
         );
-    },
-
-    closeWorld: function() {
-      app.wikitudePlugin.isDeviceSupported(function() {
-        app.wikitudePlugin.close(function successFn(onBackButton){
-        }
-        );
-      },
-      );
     }
-
 
 };

@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon" />
     <title>BlackDish</title>
   </head>
-  <body onLoad="javascript:AR.logger.activateDebugMode();">
+  <body>
     <div class="navbar-fixed">
       <nav class="top-navbar">
         <div class="nav-wrapper">
@@ -23,17 +23,15 @@
           <ul class="center-top">
             <li class="flow-text black-text">Black Dish</li>
           </ul>
-          <ul class="right">
-            <li><a class="flow-text black-text" href="#!">100</a></li>
-          </ul>
+          <ul id="puntosContainer" class="right"></ul>
           <!-- Dropdown Structure -->
           <ul id='dropdown1' class='dropdown-content'>
-            <li><a class="black-text" href="#!"><i class="material-icons black-text">person</i>Bienvenido Uriel</a></li>
+            <li id="bienvenidoContainer"></li>
             <li class="divider"></li>
             <li><a class="black-text" href="previous.html"><i class="material-icons black-text">assignment</i>Pedidos anteriores</a></li>
             <li><a class="black-text" href="profile.html"><i class="material-icons black-text">person</i>Informacion de contacto</a></li>
             <li><a class="black-text" href="terminos.html"><i class="material-icons black-text">dehaze</i>Terminos y condiciones</a></li>
-            <li><a class="black-text" href="#!"><i class="material-icons black-text">share</i>Compartir puntos</a></li>
+            <li><a class="black-text" href="share.html"><i class="material-icons black-text">share</i>Compartir puntos</a></li>
             <li><a class="black-text" href="main.html"><i class="material-icons black-text">keyboard_backspace</i>Volver al menu</a></li>
             <li><a class="black-text" href="#!" onclick="logOut();"><i class="material-icons black-text">exit_to_app</i>Log out</a></li>
           </ul>
@@ -138,6 +136,7 @@
         validaLogin();
         $(".dropdown-trigger").dropdown();
         $('.sidenav').sidenav();
+        loadPerfil();
       });
     </script>
     <!--Script to login with facebook-->

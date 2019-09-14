@@ -13,25 +13,25 @@
     <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon" />
     <title>BlackDish</title>
   </head>
-  <body onLoad="javascript:AR.logger.activateDebugMode();">
+  <body>
     <div class="navbar-fixed">
       <nav class="top-navbar">
         <div class="nav-wrapper">
           <ul class="left">
-            <li><a class="dropdown-trigger" href="#!" data-target="menu"><i class="material-icons left black-text">account_circle</i></a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="material-icons left black-text">account_circle</i></a></li>
           </ul>
           <ul class="center-top">
             <li class="flow-text black-text">Black Dish</li>
           </ul>
           <ul id="puntosContainer" class="right"></ul>
           <!-- Dropdown Structure -->
-          <ul id='menu' class='dropdown-content'>
-            <li><a class="black-text" href="#!"><i class="material-icons black-text">person</i>Bienvenido</a></li>
+          <ul id='dropdown1' class='dropdown-content'>
+            <li id="bienvenidoContainer"></li>
             <li class="divider"></li>
             <li><a class="black-text" href="previous.html"><i class="material-icons black-text">assignment</i>Pedidos anteriores</a></li>
             <li><a class="black-text" href="profile.html"><i class="material-icons black-text">person</i>Informacion de contacto</a></li>
             <li><a class="black-text" href="terminos.html"><i class="material-icons black-text">dehaze</i>Terminos y condiciones</a></li>
-            <li><a class="black-text" href="#!"><i class="material-icons black-text">share</i>Compartir puntos</a></li>
+            <li><a class="black-text" href="share.html"><i class="material-icons black-text">share</i>Compartir puntos</a></li>
             <li><a class="black-text" href="main.html"><i class="material-icons black-text">keyboard_backspace</i>Volver al menu</a></li>
             <li><a class="black-text" href="#!" onclick="logOut();"><i class="material-icons black-text">exit_to_app</i>Log out</a></li>
           </ul>
@@ -50,7 +50,7 @@
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-        <a href="#!" class="waves-effect waves-green btn-flat" onclick="Editar();">Actualizar</a>
+        <a href="#!" class="waves-effect waves-green btn-flat" onclick="editar();">Actualizar</a>
       </div>
     </div>
 
